@@ -1,0 +1,47 @@
+.spoiler {
+  width: max-content;
+
+  &__text {
+    color: cornflowerblue;
+    cursor: pointer;
+    display: inline;
+  }
+
+  &__block {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+
+
+    &:hover .spoiler__text {
+      color: darkblue;
+    }
+
+    &:hover .icon-toggle {
+      border-color: darkblue;
+    }
+  }
+}
+
+.icon-toggle {
+  width: 7px;
+  height: 7px;
+  border: 2px solid cornflowerblue;
+  transform: rotate(45deg);
+  cursor: pointer;
+
+  &__down {
+    margin-left: 5px;
+    margin-top: 8px;
+    border-bottom: none;
+    border-right: none;
+  }
+
+  &__up {
+    margin-left: 5px;
+    margin-top: 4px;
+    border-top: none;
+    border-left: none;
+  }
+}

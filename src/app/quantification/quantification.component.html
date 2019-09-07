@@ -1,1 +1,58 @@
-<p>quantification works!</p>
+<div class="app-quantification">
+  <div class="app-quantification__amount">
+    <label>
+      <span>Количество средств</span>
+      <input [value]="amount"
+             (input)="amount = +$event.target.value"
+             type="number">
+    </label>
+  </div>
+
+  <div *ngFor="let item of items" class="app-quantification__ticker">
+    <div class="app-quantification__name">
+      <label>
+        <span>Название</span>
+        <input [value]="item.name"
+               (input)="item.name = $event.target.value"
+               type="text">
+      </label>
+    </div>
+    <div class="app-quantification__value">
+      <label>
+        <span>Стоимость</span>
+        <input [value]="item.cost"
+               (input)="item.cost = +$event.target.value"
+               type="number">
+        <div (click)="onDeleteClick(item)"
+             class="app-quantification__delete">
+        </div>
+      </label>
+    </div>
+  </div>
+
+  <div class="app-quantification__text-block">
+    <span class="app-quantification__text"
+          (click)="onAddClick()">
+      Добавить бумагу
+    </span>
+
+    <span class="app-quantification__text"
+          (click)="onClearClick()">
+      Отчистить
+    </span>
+  </div>
+
+  <button (click)="buttonClick()">Рассчитать</button>
+
+  <div *ngIf="quantumItems">
+    <p>Для равномерного распределения портфеля необходимо купить:</p>
+    <div *ngFor="let item of quantumItems">
+      <div class="app-quantification__quantity-result">
+        Бумаги <h2>{{ item.name }}</h2> в количестве <h2>{{ item.quantity }}</h2>
+      </div>
+    </div>
+    <div class="app-quantification__total-cost-result">
+      Общая сумма составит <h2>{{ totalCost }}</h2>
+    </div>
+  </div>
+</div>
