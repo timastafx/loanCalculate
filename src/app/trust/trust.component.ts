@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
 interface IResultTransactions {
   months: number;
@@ -11,13 +11,11 @@ interface ResultLoan {
 }
 
 @Component({
-  selector: 'app-trust',
-  templateUrl: './trust.component.html',
-  styleUrls: ['./trust.component.less']
+  selector: "app-trust",
+  templateUrl: "./trust.component.html",
+  styleUrls: ["./trust.component.less"],
 })
-
 export class TrustComponent implements OnInit {
-
   public amount = 1000;
   public payment = 30;
   public percent = 15;
@@ -25,7 +23,11 @@ export class TrustComponent implements OnInit {
   public depositResult: IResultTransactions;
   public settingToggle = false;
 
-  static loanCalculation(amount: number, payment: number, percent: number): ResultLoan {
+  static loanCalculation(
+    amount: number,
+    payment: number,
+    percent: number
+  ): ResultLoan {
     // колличество месяцев, которое производится выплата
     let monthsCount = 0;
     // осталось выплатить
@@ -42,7 +44,7 @@ export class TrustComponent implements OnInit {
         break;
       }
 
-      loanBalance *= (percent / 12 / 100) + 1;
+      loanBalance *= percent / 12 / 100 + 1;
 
       // Расчеет всей заплаченной суммы
       if (loanBalance >= payment) {
@@ -57,11 +59,16 @@ export class TrustComponent implements OnInit {
 
     return {
       months: monthsCount,
-      totalPaid: totalPaid.toFixed(2)
+      totalPaid: totalPaid.toFixed(2),
     };
   }
 
-  static depositCalculation(amount: number, payment: number, period: number, percent: number = 7.5): IResultTransactions {
+  static depositCalculation(
+    amount: number,
+    payment: number,
+    period: number,
+    percent: number = 7.5
+  ): IResultTransactions {
     let monthsCount = 0;
     let deposit = 0;
 
@@ -69,25 +76,32 @@ export class TrustComponent implements OnInit {
       if (deposit <= amount) {
         monthsCount += 1;
       }
-      deposit *= (percent / 12 / 100) + 1;
+      deposit *= percent / 12 / 100 + 1;
       deposit += payment;
     }
 
     return {
       months: monthsCount,
-      deposit: deposit.toFixed(2)
+      deposit: deposit.toFixed(2),
     };
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   public buttonClick() {
     this.amount = +this.amount;
     this.payment = +this.payment;
     this.percent = +this.percent;
-    this.loanResult = TrustComponent.loanCalculation(this.amount, this.payment, this.percent);
-    this.depositResult = TrustComponent.depositCalculation(this.amount, this.payment, this.loanResult.months);
+    this.loanResult = TrustComponent.loanCalculation(
+      this.amount,
+      this.payment,
+      this.percent
+    );
+    this.depositResult = TrustComponent.depositCalculation(
+      this.amount,
+      this.payment,
+      this.loanResult.months
+    );
 
     console.log(this.percent);
   }
