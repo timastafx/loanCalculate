@@ -1,0 +1,12 @@
+<div class="core-tabs">
+  <ng-container *ngFor="let tab of tabs; trackBy: trackById">
+    <a
+      class="app-header__item app-header__item-active"
+      [routerLink]="tab.path"
+      [ngClass]="{'core-tabs__active': tab.id === activeId}"
+      (click)="onItemClick(tab)"
+    >
+      {{ tab.label }}
+    </a>
+  </ng-container>
+</div>
