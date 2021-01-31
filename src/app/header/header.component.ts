@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -6,17 +6,13 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./header.component.less']
 })
 export class HeaderComponent implements OnInit {
-  public rootCategories: boolean[] = [
-    true,
-    false
-  ];
+  public rootCategories: boolean[] = [true, false];
 
   @Input() id: number;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   public onItemClick(id: number): void {
     this.id = id;
