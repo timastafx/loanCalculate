@@ -21,7 +21,7 @@ const themesClassMap = {
   styleUrls: ['./app.component.less']
 })
 export class AppComponent {
-  theme = Theme.Dark;
+  theme = Theme.Light;
 
   tabs: Tab[] = [
     {
