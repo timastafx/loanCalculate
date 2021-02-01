@@ -22,7 +22,7 @@ export class TabsComponent implements OnInit {
   }
 
   onItemClick(tab: Tab): void {
-    console.log(tab);
+    this.activeId = tab.id;
   }
 
   trackById(_: number, item: Tab): string {

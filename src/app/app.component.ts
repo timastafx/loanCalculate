@@ -1,13 +1,27 @@
 import { Component } from '@angular/core';
 import { Tab } from '../../components/src/tabs/tabs.component';
 
+export enum Theme {
+  Light = 'Light',
+  Dark = 'Dark',
+  Color = 'Color'
+}
+
+const themeClassName = 'app-component';
+
+const themesClassMap = {
+  [Theme.Light]: `${themeClassName}--light`,
+  [Theme.Dark]: `${themeClassName}--dark`,
+  [Theme.Color]: `${themeClassName}--color`
+};
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.less']
 })
 export class AppComponent {
-  title = 'loanCalculate';
+  theme = Theme.Dark;
 
   tabs: Tab[] = [
     {
@@ -21,4 +35,10 @@ export class AppComponent {
       path: ['/quantification']
     }
   ];
+
+  get themeClass(): { [key: string]: boolean } {
+    return {
+      [themesClassMap[this.theme]]: true
+    };
+  }
 }
