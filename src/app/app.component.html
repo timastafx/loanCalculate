@@ -1,6 +1,5 @@
-<div class="app-component">
-  <app-header [id]="0"></app-header>
-  <app-trust></app-trust>
-  <hr>
-  <app-quantification></app-quantification>
+<div class="app-component" [ngClass]="themeClass">
+  <core-tabs [tabs]="tabs"></core-tabs>
+
+  <router-outlet></router-outlet>
 </div>

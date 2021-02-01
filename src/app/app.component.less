@@ -1,5 +1,27 @@
+:host .app-component--color {
+  --primary-text-color: blue;
+  --secondary-text-color: red;
+  --primary-border-color: green;
+  --primary-background-color: azure;
+}
+
+:host .app-component--light {
+  --primary-border-color: black;
+  --primary-text-color: black;
+  --secondary-text-color: orange;
+  --primary-background-color: white;
+}
+
+:host .app-component--dark {
+  --primary-border-color: white;
+  --primary-text-color: white;
+  --secondary-text-color: orange;
+  --primary-background-color: black;
+}
+
 .app-component {
   width: 600px;
   margin-left: auto;
   margin-right: auto;
+  background-color: var(--primary-background-color, white);
 }
