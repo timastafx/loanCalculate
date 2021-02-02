@@ -1,4 +1,15 @@
 <div class="app-component" [ngClass]="themeClass">
+  <ul class="app-component__theme-selector app-component-theme-selector">
+    <li
+      *ngFor="let theme of themeValues"
+      class="app-component-theme-selector__item"
+      [class.app-component-theme-selector__item--active]="theme === activeTheme"
+      (click)="onThemeChange(theme)"
+    >
+      {{ theme }}
+    </li>
+  </ul>
+
   <div class="app-component__content">
     <core-tabs [tabs]="tabs"></core-tabs>
 
