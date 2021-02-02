@@ -1,7 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 
-// Проверка
-
 export interface Tab {
   id: string;
   label: string;

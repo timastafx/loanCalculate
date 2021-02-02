@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Tab } from '../../components/src/tabs/tabs.component';
+import { Tab } from '../../../components/src/tabs/tabs.component';
 
 export enum Theme {
   Light = 'Light',
@@ -21,7 +21,7 @@ const themesClassMap = {
   styleUrls: ['./app.component.less']
 })
 export class AppComponent {
-  theme = Theme.Light;
+  theme = Theme.Color;
 
   tabs: Tab[] = [
     {
