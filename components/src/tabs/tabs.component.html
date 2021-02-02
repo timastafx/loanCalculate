@@ -1,10 +1,6 @@
 <ul class="core-tabs">
-  <li
-    *ngFor="let tab of tabs; trackBy: trackById"
-    class="core-tabs__item"
-    [ngClass]="{ 'core-tabs__item--active': tab.id === activeId }"
-  >
-    <a class="app-header__item app-header__item-active" [routerLink]="tab.path" (click)="onItemClick(tab)">
+  <li *ngFor="let tab of tabs; trackBy: trackById" class="core-tabs__item core-tabs-item">
+    <a class="core-tabs-item__text" [routerLink]="tab.path" [routerLinkActive]="['core-tabs-item__text--active']">
       {{ tab.label }}
     </a>
   </li>
