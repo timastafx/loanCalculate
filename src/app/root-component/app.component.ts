@@ -36,6 +36,16 @@ export class AppComponent implements OnInit {
       id: '1',
       label: 'Расчет портфеля',
       path: ['/quantification']
+    },
+    {
+      id: '2',
+      label: 'Пенсионный калькулятор',
+      path: ['/pension']
+    },
+    {
+      id: '3',
+      label: 'Инвест план',
+      path: ['/invest-plan']
     }
   ];
 
