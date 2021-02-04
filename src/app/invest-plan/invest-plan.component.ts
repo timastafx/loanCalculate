@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-invest-plan',
@@ -6,4 +7,10 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrls: ['invest-plan.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InvestPlanComponent {}
+export class InvestPlanComponent {
+  testInput = new FormControl(null, Validators.required);
+
+  onInputBlur() {
+    console.log(this.testInput.value);
+  }
+}

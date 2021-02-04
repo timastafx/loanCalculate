@@ -1,4 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { InputType } from '../../../components/src/input-group/input-group.component';
 
 interface IResultTransactions {
   months: number;
@@ -10,10 +12,17 @@ interface ResultLoan {
   totalPaid: string;
 }
 
+interface InputFormControl {
+  amount: FormControl;
+  monthlyFee: FormControl;
+  interestRate: FormControl;
+}
+
 @Component({
-  selector: "app-trust",
-  templateUrl: "./trust.component.html",
-  styleUrls: ["./trust.component.less"],
+  selector: 'app-trust',
+  templateUrl: './trust.component.html',
+  styleUrls: ['./trust.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TrustComponent implements OnInit {
   public amount = 1000;
@@ -23,11 +32,10 @@ export class TrustComponent implements OnInit {
   public depositResult: IResultTransactions;
   public settingToggle = false;
 
-  static loanCalculation(
-    amount: number,
-    payment: number,
-    percent: number
-  ): ResultLoan {
+  inputFormControls: InputFormControl;
+  inputType = InputType;
+
+  static loanCalculation(amount: number, payment: number, percent: number): ResultLoan {
     // колличество месяцев, которое производится выплата
     let monthsCount = 0;
     // осталось выплатить
@@ -59,7 +67,7 @@ export class TrustComponent implements OnInit {
 
     return {
       months: monthsCount,
-      totalPaid: totalPaid.toFixed(2),
+      totalPaid: totalPaid.toFixed(2)
     };
   }
 
@@ -82,26 +90,24 @@ export class TrustComponent implements OnInit {
 
     return {
       months: monthsCount,
-      deposit: deposit.toFixed(2),
+      deposit: deposit.toFixed(2)
     };
   }
 
-  ngOnInit() {}
+  ngOnInit(): void {
+    this.inputFormControls = {
+      amount: new FormControl('1000', [Validators.required]),
+      interestRate: new FormControl('', [Validators.required]),
+      monthlyFee: new FormControl('', [Validators.required])
+    };
+  }
 
   public buttonClick() {
     this.amount = +this.amount;
     this.payment = +this.payment;
     this.percent = +this.percent;
-    this.loanResult = TrustComponent.loanCalculation(
-      this.amount,
-      this.payment,
-      this.percent
-    );
-    this.depositResult = TrustComponent.depositCalculation(
-      this.amount,
-      this.payment,
-      this.loanResult.months
-    );
+    this.loanResult = TrustComponent.loanCalculation(this.amount, this.payment, this.percent);
+    this.depositResult = TrustComponent.depositCalculation(this.amount, this.payment, this.loanResult.months);
 
     console.log(this.percent);
   }

@@ -1,3 +1,4 @@
 Чтобы задеплоить приложение необходимо:
 ng build --prod --base-href "https://timastafx.github.io/loanCalculate/"
 ngh --dir dist/loanCalculate
+

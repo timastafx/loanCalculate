@@ -1,0 +1,7 @@
+<div class="core-input-group" [ngClass]="inputClass">
+  <label>
+    <span class="core-input-group__label"> {{ label }} </span>
+
+    <input class="core-input-group__input" [type]="type" [formControl]="inputControl" (blur)="onInputBlur()" />
+  </label>
+</div>

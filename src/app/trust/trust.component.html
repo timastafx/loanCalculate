@@ -1,33 +1,38 @@
 <div class="trust">
-
   <div class="trust__input-field-block">
-    <label class="trust__label">
-      <span>Требуемая сумма</span>
-      <input [value]="amount"
-             (input)="amount = $event.target.value"
-             type="number">
-    </label>
+    <!--    <label class="trust__label">-->
+    <!--      <span>Требуемая сумма</span>-->
+    <!--      <input [value]="amount"-->
+    <!--             (input)="amount = $event.target.value"-->
+    <!--             type="number">-->
+    <!--    </label>-->
+    <core-input-group
+      label="Требуемая сумма"
+      [type]="inputType.NUMBER"
+      [inputControl]="inputFormControls.amount"
+    ></core-input-group>
   </div>
 
   <div class="trust__input-field-block">
     <label class="trust__label">
       <span>Сумма, выплачиваемая ежемесячно</span>
-      <input [value]="payment" (input)="payment = $event.target.value" type="number">
+      <input [value]="payment" (input)="payment = $event.target.value" type="number" />
     </label>
   </div>
 
   <div class="trust__input-field-block">
     <label class="trust__label">
       <span>Процент</span>
-      <input [value]="percent" (input)="percent = $event.target.value" type="number">
+      <input [value]="percent" (input)="percent = $event.target.value" type="number" />
     </label>
   </div>
 
-  <app-controls-spoiler caption="Дополнительные параметры"
-                        style="display: flex;
-                               justify-content: flex-end"
-                        [toggle]="settingToggle"
-                        (valueChanged)="_spoilerValueChanged($event)">
+  <app-controls-spoiler
+    caption="Дополнительные параметры"
+    style="display: flex; justify-content: flex-end"
+    [toggle]="settingToggle"
+    (valueChanged)="_spoilerValueChanged($event)"
+  >
   </app-controls-spoiler>
 
   <div class="dopPar" *ngIf="settingToggle">
@@ -37,11 +42,29 @@
   <button (click)="buttonClick()">Рассчитать</button>
 
   <div *ngIf="loanResult">
-    <div class="trust__result">Кредит будет полностью погашен через <h2>{{ loanResult.months }}</h2> месяц(-ев)</div>
-    <div class="trust__result">Сумма выплат в пользу банка составит <h2>{{ loanResult.totalPaid }}</h2> рубля(-ей)</div>
+    <div class="trust__result">
+      Кредит будет полностью погашен через
+      <h2>{{ loanResult.months }}</h2>
+      месяц(-ев)
+    </div>
+    <div class="trust__result">
+      Сумма выплат в пользу банка составит
+      <h2>{{ loanResult.totalPaid }}</h2>
+      рубля(-ей)
+    </div>
   </div>
   <div *ngIf="depositResult">
-    <div class="trust__result">Накопление той же суммы займет <h2>{{ depositResult.months }}</h2> месяц(-ев)</div>
-    <div class="trust__result">Через <h2>{{ loanResult.months }}</h2> месяца(-ев) сумма накоплений составит <h2>{{ depositResult.deposit }}</h2>рубля(-ей)</div>
+    <div class="trust__result">
+      Накопление той же суммы займет
+      <h2>{{ depositResult.months }}</h2>
+      месяц(-ев)
+    </div>
+    <div class="trust__result">
+      Через
+      <h2>{{ loanResult.months }}</h2>
+      месяца(-ев) сумма накоплений составит
+      <h2>{{ depositResult.deposit }}</h2>
+      рубля(-ей)
+    </div>
   </div>
 </div>
