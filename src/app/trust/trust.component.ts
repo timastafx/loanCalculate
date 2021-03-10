@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InputType } from '../../../components/src/input-group/input-group.component';
 
 interface IResultTransactions {
@@ -12,10 +12,11 @@ interface ResultLoan {
   totalPaid: string;
 }
 
-interface InputFormControl {
-  amount: FormControl;
-  monthlyFee: FormControl;
-  interestRate: FormControl;
+interface InputForm {
+  amount: string;
+  monthlyFee: string;
+  interestRate: string;
+  depositPercent: string;
 }
 
 @Component({
@@ -25,21 +26,21 @@ interface InputFormControl {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TrustComponent implements OnInit {
-  public amount = 1000;
-  public payment = 30;
-  public percent = 15;
   public loanResult: ResultLoan;
   public depositResult: IResultTransactions;
   public settingToggle = false;
 
-  inputFormControls: InputFormControl;
+  inputFormControls: FormGroup;
   inputType = InputType;
 
-  static loanCalculation(amount: number, payment: number, percent: number): ResultLoan {
+  constructor(private fb: FormBuilder) {
+  }
+
+  static loanCalculation({ amount, monthlyFee, interestRate }: InputForm): ResultLoan {
     // колличество месяцев, которое производится выплата
     let monthsCount = 0;
     // осталось выплатить
-    let loanBalance = amount;
+    let loanBalance = Number(amount);
     // всего выплачено
     let totalPaid = 0;
 
@@ -47,21 +48,21 @@ export class TrustComponent implements OnInit {
       // Проверка на наличие задолженности и на возможность погашения кредита
       if (loanBalance <= 0) {
         break;
-      } else if (loanBalance > amount) {
+      } else if (loanBalance > Number(amount)) {
         monthsCount = -1;
         break;
       }
 
-      loanBalance *= percent / 12 / 100 + 1;
+      loanBalance *= Number(interestRate) / 12 / 100 + 1;
 
       // Расчеет всей заплаченной суммы
-      if (loanBalance >= payment) {
-        totalPaid += +payment;
+      if (loanBalance >= Number(monthlyFee)) {
+        totalPaid += +monthlyFee;
       } else {
         totalPaid += +loanBalance;
       }
 
-      loanBalance -= payment;
+      loanBalance -= Number(monthlyFee);
       monthsCount += 1;
     }
 
@@ -72,20 +73,19 @@ export class TrustComponent implements OnInit {
   }
 
   static depositCalculation(
-    amount: number,
-    payment: number,
-    period: number,
-    percent: number = 7.5
+    { amount, monthlyFee, depositPercent }: InputForm,
+    period: number
   ): IResultTransactions {
     let monthsCount = 0;
     let deposit = 0;
 
     for (let i = 0; i < period; i++) {
-      if (deposit <= amount) {
+      if (deposit <= Number(amount)) {
         monthsCount += 1;
       }
-      deposit *= percent / 12 / 100 + 1;
-      deposit += payment;
+
+      deposit *= Number(depositPercent) / 12 / 100 + 1;
+      deposit += Number(monthlyFee);
     }
 
     return {
@@ -95,21 +95,17 @@ export class TrustComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.inputFormControls = {
-      amount: new FormControl('1000', [Validators.required]),
-      interestRate: new FormControl('', [Validators.required]),
-      monthlyFee: new FormControl('', [Validators.required])
-    };
+    this.inputFormControls = this.fb.group({
+      amount: [1000, Validators.required],
+      interestRate: [24, Validators.required],
+      monthlyFee: [30, Validators.required],
+      depositPercent: 7.5
+    });
   }
 
-  public buttonClick() {
-    this.amount = +this.amount;
-    this.payment = +this.payment;
-    this.percent = +this.percent;
-    this.loanResult = TrustComponent.loanCalculation(this.amount, this.payment, this.percent);
-    this.depositResult = TrustComponent.depositCalculation(this.amount, this.payment, this.loanResult.months);
-
-    console.log(this.percent);
+  public calculate() {
+    this.loanResult = TrustComponent.loanCalculation(this.inputFormControls.value);
+    this.depositResult = TrustComponent.depositCalculation(this.inputFormControls.value, this.loanResult.months);
   }
 
   public _spoilerValueChanged(value: boolean): void {

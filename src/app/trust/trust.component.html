@@ -1,30 +1,26 @@
-<div class="trust">
+<div *ngIf="inputFormControls.controls as controls" class="trust">
   <div class="trust__input-field-block">
-    <!--    <label class="trust__label">-->
-    <!--      <span>Требуемая сумма</span>-->
-    <!--      <input [value]="amount"-->
-    <!--             (input)="amount = $event.target.value"-->
-    <!--             type="number">-->
-    <!--    </label>-->
     <core-input-group
       label="Требуемая сумма"
       [type]="inputType.NUMBER"
-      [inputControl]="inputFormControls.amount"
+      [inputControl]="controls.amount"
     ></core-input-group>
   </div>
 
   <div class="trust__input-field-block">
-    <label class="trust__label">
-      <span>Сумма, выплачиваемая ежемесячно</span>
-      <input [value]="payment" (input)="payment = $event.target.value" type="number" />
-    </label>
+    <core-input-group
+      label="Сумма, выплачиваемая ежемесячно"
+      [type]="inputType.NUMBER"
+      [inputControl]="controls.monthlyFee"
+    ></core-input-group>
   </div>
 
   <div class="trust__input-field-block">
-    <label class="trust__label">
-      <span>Процент</span>
-      <input [value]="percent" (input)="percent = $event.target.value" type="number" />
-    </label>
+    <core-input-group
+      label="Процент"
+      [type]="inputType.NUMBER"
+      [inputControl]="controls.interestRate"
+    ></core-input-group>
   </div>
 
   <app-controls-spoiler
@@ -39,7 +35,7 @@
     <p>Дополнительные параметры</p>
   </div>
 
-  <button (click)="buttonClick()">Рассчитать</button>
+  <button (click)="calculate()">Рассчитать</button>
 
   <div *ngIf="loanResult">
     <div class="trust__result">

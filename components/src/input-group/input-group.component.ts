@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { AbstractControl, FormControl } from '@angular/forms';
 
 export enum InputPosition {
   VERTICAL,
@@ -27,7 +27,7 @@ const inputClassMap = {
 export class InputGroupComponent {
   @Input() label: string;
   @Input() position: InputPosition = InputPosition.HORIZONTAL;
-  @Input() inputControl: FormControl;
+  @Input() inputControl: FormControl | AbstractControl;
   @Input() type: InputType = InputType.TEXT;
 
   @Output() private inputBlur = new EventEmitter<void>();
