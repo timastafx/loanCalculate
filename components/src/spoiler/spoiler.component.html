@@ -1,0 +1,17 @@
+<div class="core-spoiler">
+  <div class="core-spoiler__caption" (click)="onToggle()">
+    <span class="core-spoiler__caption__text">{{ caption }}</span>
+
+    <div *ngIf="!isOpen">
+      <div class="icon-toggle icon-toggle__up"></div>
+    </div>
+
+    <div *ngIf="isOpen">
+      <div class="icon-toggle icon-toggle__down"></div>
+    </div>
+  </div>
+
+  <div *ngIf="isOpen" class="core-spoiler__content">
+    <ng-content></ng-content>
+  </div>
+</div>

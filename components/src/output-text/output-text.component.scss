@@ -1,0 +1,12 @@
+.core-output-text {
+  width: 100%;
+
+  &__row {
+    display: flex;
+    align-items: baseline;
+
+    &__text:not(:last-child) {
+      margin-right: 6px;
+    }
+  }
+}

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InputType } from '../../../components/src/input-group/input-group.component';
+import { OutputText, TextType } from '../../../components/src/output-text/output-text.component';
 
 interface IResultTransactions {
   months: number;
@@ -26,17 +27,31 @@ interface InputForm {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TrustComponent implements OnInit {
-  public loanResult: ResultLoan;
-  public depositResult: IResultTransactions;
-  public settingToggle = false;
+  loanResult: ResultLoan;
+  depositResult: IResultTransactions;
+  outputText: OutputText[][];
 
   inputFormControls: FormGroup;
   inputType = InputType;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.inputFormControls = this.fb.group({
+      amount: [1000, Validators.required],
+      interestRate: [24, Validators.required],
+      monthlyFee: [30, Validators.required],
+      depositPercent: 7.5
+    });
   }
 
-  static loanCalculation({ amount, monthlyFee, interestRate }: InputForm): ResultLoan {
+  calculate() {
+    this.loanResult = this.loanCalculation(this.inputFormControls.value);
+    this.depositResult = this.depositCalculation(this.inputFormControls.value, this.loanResult.months);
+    this.outputText = this.getOutputText(this.loanResult, this.depositResult);
+  }
+
+  protected loanCalculation({ amount, monthlyFee, interestRate }: InputForm): ResultLoan {
     // колличество месяцев, которое производится выплата
     let monthsCount = 0;
     // осталось выплатить
@@ -72,10 +87,7 @@ export class TrustComponent implements OnInit {
     };
   }
 
-  static depositCalculation(
-    { amount, monthlyFee, depositPercent }: InputForm,
-    period: number
-  ): IResultTransactions {
+  protected depositCalculation({ amount, monthlyFee, depositPercent }: InputForm, period: number): IResultTransactions {
     let monthsCount = 0;
     let deposit = 0;
 
@@ -94,21 +106,30 @@ export class TrustComponent implements OnInit {
     };
   }
 
-  ngOnInit(): void {
-    this.inputFormControls = this.fb.group({
-      amount: [1000, Validators.required],
-      interestRate: [24, Validators.required],
-      monthlyFee: [30, Validators.required],
-      depositPercent: 7.5
-    });
-  }
-
-  public calculate() {
-    this.loanResult = TrustComponent.loanCalculation(this.inputFormControls.value);
-    this.depositResult = TrustComponent.depositCalculation(this.inputFormControls.value, this.loanResult.months);
-  }
-
-  public _spoilerValueChanged(value: boolean): void {
-    this.settingToggle = value;
+  protected getOutputText(loanResult: ResultLoan, depositResult: IResultTransactions): OutputText[][] {
+    return [
+      [
+        { type: TextType.simple, value: 'Кредит будет полностью погашен через' },
+        { type: TextType.highlighted, value: String(loanResult.months) },
+        { type: TextType.simple, value: 'месяц(-ев)' }
+      ],
+      [
+        { type: TextType.simple, value: 'Сумма выплат в пользу банка составит' },
+        { type: TextType.highlighted, value: String(loanResult.totalPaid) },
+        { type: TextType.simple, value: 'рубля(-ей)' }
+      ],
+      [
+        { type: TextType.simple, value: 'Накопление той же суммы займет' },
+        { type: TextType.highlighted, value: String(depositResult.months) },
+        { type: TextType.simple, value: 'месяц(-ев)' }
+      ],
+      [
+        { type: TextType.simple, value: 'Через' },
+        { type: TextType.highlighted, value: String(loanResult.months) },
+        { type: TextType.simple, value: 'месяца(-ев) сумма накоплений составит' },
+        { type: TextType.highlighted, value: String(depositResult.deposit) },
+        { type: TextType.simple, value: 'рубля(-ей)' }
+      ]
+    ];
   }
 }

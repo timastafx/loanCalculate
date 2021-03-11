@@ -1,25 +1,24 @@
-.spoiler {
-  width: max-content;
+.core-spoiler {
+  width: 100%;
 
-  &__text {
-    color: cornflowerblue;
-    cursor: pointer;
-    display: inline;
-  }
-
-  &__block {
+  &__caption {
     width: 100%;
     display: flex;
     justify-content: flex-end;
     margin-top: 10px;
 
-
-    &:hover .spoiler__text {
+    &:hover &__text {
       color: darkblue;
     }
 
     &:hover .icon-toggle {
       border-color: darkblue;
+    }
+
+    &__text {
+      color: cornflowerblue;
+      cursor: pointer;
+      display: inline;
     }
   }
 }

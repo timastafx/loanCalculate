@@ -23,44 +23,13 @@
     ></core-input-group>
   </div>
 
-  <app-controls-spoiler
-    caption="Дополнительные параметры"
-    style="display: flex; justify-content: flex-end"
-    [toggle]="settingToggle"
-    (valueChanged)="_spoilerValueChanged($event)"
-  >
-  </app-controls-spoiler>
-
-  <div class="dopPar" *ngIf="settingToggle">
-    <p>Дополнительные параметры</p>
-  </div>
+  <core-spoiler caption="Дополнительные параметры" style="display: flex; justify-content: flex-end">
+    <div class="dopPar">
+      <p>Дополнительные параметры</p>
+    </div>
+  </core-spoiler>
 
   <button (click)="calculate()">Рассчитать</button>
 
-  <div *ngIf="loanResult">
-    <div class="trust__result">
-      Кредит будет полностью погашен через
-      <h2>{{ loanResult.months }}</h2>
-      месяц(-ев)
-    </div>
-    <div class="trust__result">
-      Сумма выплат в пользу банка составит
-      <h2>{{ loanResult.totalPaid }}</h2>
-      рубля(-ей)
-    </div>
-  </div>
-  <div *ngIf="depositResult">
-    <div class="trust__result">
-      Накопление той же суммы займет
-      <h2>{{ depositResult.months }}</h2>
-      месяц(-ев)
-    </div>
-    <div class="trust__result">
-      Через
-      <h2>{{ loanResult.months }}</h2>
-      месяца(-ев) сумма накоплений составит
-      <h2>{{ depositResult.deposit }}</h2>
-      рубля(-ей)
-    </div>
-  </div>
+  <core-output-text *ngIf="outputText" [outputText]="outputText"></core-output-text>
 </div>

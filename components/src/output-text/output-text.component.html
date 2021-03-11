@@ -1,0 +1,16 @@
+<div class="core-output-text">
+  <div *ngFor="let row of outputText" class="core-output-text__row">
+    <ng-container *ngFor="let text of row">
+      <ng-container [ngSwitch]="text.type">
+        <span *ngSwitchCase="TextType.simple" class="core-output-text__row__text">{{ text.value }}</span>
+
+        <h2
+          *ngSwitchCase="TextType.highlighted"
+          class="core-output-text__row__text core-output-text__row__text--highlighted"
+        >
+          {{ text.value }}
+        </h2>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>
