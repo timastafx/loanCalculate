@@ -1,0 +1,12 @@
+.invest-plan {
+  &__header {
+    margin-bottom: 12px;
+  }
+
+  &-body {
+    &__input,
+    &__button {
+      margin-top: 6px;
+    }
+  }
+}

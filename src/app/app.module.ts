@@ -7,10 +7,11 @@ import { QuantificationComponent } from './quantification/quantification.compone
 import { ComponentsModule } from '../../components/src/components.module';
 import { PensionPlanComponent } from './pension-plan/pension-plan.component';
 import { InvestPlanComponent } from './invest-plan/invest-plan.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, TrustComponent, QuantificationComponent, PensionPlanComponent, InvestPlanComponent],
-  imports: [BrowserModule, AppRoutingModule, ComponentsModule],
+  imports: [BrowserModule, AppRoutingModule, ComponentsModule, ReactiveFormsModule],
   providers: [],
   bootstrap: [AppComponent]
 })

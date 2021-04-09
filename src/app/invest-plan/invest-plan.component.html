@@ -1,4 +1,37 @@
-<div>Инвестиционный план:</div>
-<div style="width: 600px; border: 1px solid black">
-  <core-input-group [label]="'Salibi'" [inputControl]="testInput" (inputBlur)="onInputBlur()"></core-input-group>
+<div class="invest-plan">
+  <div class="invest-plan__header">Инвестиционный план:</div>
+
+  <div class="invest-plan__body">
+    <div class="invest-plan-body__input">
+      <core-input-group
+        label="Финансовая цель"
+        [type]="inputType.NUMBER"
+        [inputControl]="form.controls.purpose"
+      ></core-input-group>
+    </div>
+
+    <div class="invest-plan-body__input">
+      <core-input-group
+        label="Срок"
+        [type]="inputType.NUMBER"
+        [inputControl]="form.controls.deadline"
+      ></core-input-group>
+    </div>
+
+    <div class="invest-plan-body__input">
+      <core-input-group
+        label="Процент инвестирования"
+        [type]="inputType.NUMBER"
+        [inputControl]="form.controls.percent"
+      ></core-input-group>
+    </div>
+
+    <div class="invest-plan-body__button">
+      <button (click)="calculate(form.value)">Рассчитать</button>
+    </div>
+
+    <div class="invest-plan-body__result">
+      <core-output-text [outputText]="text"></core-output-text>
+    </div>
+  </div>
 </div>
