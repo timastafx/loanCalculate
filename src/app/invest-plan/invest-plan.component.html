@@ -12,7 +12,7 @@
 
     <div class="invest-plan-body__input">
       <core-input-group
-        label="Срок"
+        label="Срок (лет)"
         [type]="inputType.NUMBER"
         [inputControl]="form.controls.deadline"
       ></core-input-group>
@@ -28,6 +28,19 @@
 
     <div class="invest-plan-body__button">
       <button (click)="calculate(form.value)">Рассчитать</button>
+    </div>
+
+    <div *ngIf="lineChartData" style="display: block">
+      <canvas
+        baseChart
+        width="400"
+        height="400"
+        chartType="line"
+        [datasets]="lineChartData"
+        [labels]="lineChartLabels"
+        [colors]="lineChartColors"
+      >
+      </canvas>
     </div>
 
     <div class="invest-plan-body__result">

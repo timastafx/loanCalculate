@@ -7,12 +7,13 @@ import { QuantificationComponent } from './quantification/quantification.compone
 import { ComponentsModule } from '../../components/src/components.module';
 import { PensionPlanComponent } from './pension-plan/pension-plan.component';
 import { InvestPlanComponent } from './invest-plan/invest-plan.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ChartsModule, ThemeService } from 'ng2-charts';
 
 @NgModule({
   declarations: [AppComponent, TrustComponent, QuantificationComponent, PensionPlanComponent, InvestPlanComponent],
-  imports: [BrowserModule, AppRoutingModule, ComponentsModule, ReactiveFormsModule],
-  providers: [],
+  imports: [BrowserModule, FormsModule, AppRoutingModule, ComponentsModule, ReactiveFormsModule, ChartsModule],
+  providers: [ThemeService],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

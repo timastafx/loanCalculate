@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { InputType } from '../../../components/src/input-group/input-group.component';
 import { OutputText, TextType } from '../../../components/src/output-text/output-text.component';
+import { Color, Label } from 'ng2-charts';
+import { ChartDataSets } from 'chart.js';
 
 @Component({
   selector: 'app-invest-plan',
@@ -12,8 +14,17 @@ import { OutputText, TextType } from '../../../components/src/output-text/output
 export class InvestPlanComponent implements OnInit {
   form: FormGroup;
   inputType = InputType;
-  plan: number[] = [1, 2, 3, 4, 5];
+  plan: number[];
   text: OutputText[][];
+
+  public lineChartData: ChartDataSets[];
+  public lineChartLabels: Label[];
+  public lineChartColors: Color[] = [
+    {
+      borderColor: 'black',
+      backgroundColor: 'rgba(255,0,0.5,0.4)'
+    }
+  ];
 
   constructor(private fb: FormBuilder) {}
 
@@ -39,6 +50,15 @@ export class InvestPlanComponent implements OnInit {
     }
 
     this.text = this.generateText(this.plan, monthlyPay);
+    this.lineChartData = [
+      {
+        data: [...this.plan],
+        label: 'Money'
+      }
+    ];
+    this.lineChartLabels = Array.from(new Array(this.lineChartData[0].data.length)).map((_, index) =>
+      String(index + 1)
+    );
   }
 
   private generateText(plan: number[], monthly: number): OutputText[][] {
