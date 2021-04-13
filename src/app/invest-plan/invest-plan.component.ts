@@ -4,6 +4,7 @@ import { InputType } from '../../../components/src/input-group/input-group.compo
 import { OutputText, TextType } from '../../../components/src/output-text/output-text.component';
 import { Color, Label } from 'ng2-charts';
 import { ChartDataSets } from 'chart.js';
+import { Calculate } from '../calculate';
 
 @Component({
   selector: 'app-invest-plan',
@@ -39,7 +40,11 @@ export class InvestPlanComponent implements OnInit {
   calculate({ purpose, deadline, percent }) {
     let monthlyPay = 1;
     while (true) {
-      const results = this.getFinPlan(Number(monthlyPay), Number(deadline), Number(percent));
+      const results = Calculate.getFinancialExpectation({
+        monthlyPay: Number(monthlyPay),
+        deadline: Number(deadline),
+        percent: Number(percent)
+      });
 
       if (results[results.length - 1] > purpose) {
         this.plan = results;
@@ -77,25 +82,5 @@ export class InvestPlanComponent implements OnInit {
         ];
       }) || [])
     ];
-  }
-
-  protected getMonthlyPercent(percent: number): number {
-    return ((percent / 100 + 1) ** (1 / 12) - 1) * 100;
-  }
-
-  protected getFinPlan(monthlyPay: number, deadline: number, percent: number): number[] {
-    let results = [];
-    const monthly = this.getMonthlyPercent(percent);
-
-    Array.from(Array(deadline)).reduce((acc, _) => {
-      return Array.from(Array(12)).reduce(trunc => {
-        const result = trunc * (1 + monthly / 100) + monthlyPay;
-        results = [...results, result];
-        return result;
-      }, acc);
-      // purpose += 5;
-    }, 0);
-
-    return results;
   }
 }
